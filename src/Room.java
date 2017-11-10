@@ -4,10 +4,10 @@
 public class Room {
     public final boolean isInfected;
     public boolean visited = false;
-    private Room Up;
-    private Room Down;
+    private Room up;
+    private Room down;
     private Room left;
-    private Room Right;
+    private Room right;
 
     public int getCountOfRoomsConnectedInfected() {
         return countOfRoomsConnectedInfected;
@@ -25,19 +25,19 @@ public class Room {
     }
 
     public Room getUp() {
-        return Up;
+        return up;
     }
 
     public void setUp(Room up) {
-        Up = up;
+        this.up = up;
     }
 
     public Room getDown() {
-        return Down;
+        return down;
     }
 
     public void setDown(Room down) {
-        Down = down;
+        this.down = down;
     }
 
     public Room getLeft() {
@@ -49,10 +49,10 @@ public class Room {
     }
 
     public Room getRight() {
-        return Right;
+        return right;
     }
 
     public void setRight(Room right) {
-        Right = right;
+        this.right = right;
     }
 }

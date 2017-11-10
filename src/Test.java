@@ -150,4 +150,13 @@ public class Test {
         }
     }
 
+    private static void print(Room[][] rooms) {
+        for(Room[] floorRooms : rooms){
+            for(Room room : floorRooms ){
+                System.out.print(room.getCountOfRoomsConnectedInfected() + " , ");
+            }
+            System.out.println();
+        }
+    }
+
 }
