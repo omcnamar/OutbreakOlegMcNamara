@@ -68,12 +68,12 @@ public class Test {
 
         //test four
         Room[][] mytest = new Room[][]{
-                {new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(true), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(true), new Room(false), new Room(true), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(true), new Room(true), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(false), new Room(true), new Room(true), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false)},
+                {new Room(true), new Room(true), new Room(true), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
+                {new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
+                {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
+                {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
+                {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
+                {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
                 {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(true), new Room(false), new Room(false)},
                 {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
                 {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
@@ -90,6 +90,8 @@ public class Test {
     }
 
     private static boolean isOutbreakThree(Room[][] rooms) {
+
+        //set up the up, down, left, right, for each room
         for (int i = 0; i < rooms.length; i++) {
             for (int j = 0; j < rooms[i].length; j++) {
 
@@ -112,12 +114,14 @@ public class Test {
             }
         }
 
+        //explore each room by calling the goWalk method
         for(Room[] floorRooms : rooms){
             for(Room room : floorRooms ){
                 goWalk(room, null,  0);
             }
         }
 
+        //determine if there are 5 or more connected infected rooms
         int max = 0;
         for(Room[] floorRooms : rooms){
             for(Room room : floorRooms ){
@@ -126,6 +130,8 @@ public class Test {
                 }
             }
         }
+
+        //return true if there are 5 or more infected connected rooms
         if(max >= 5){
             return true;
         }
