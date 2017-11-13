@@ -9,16 +9,16 @@ public class Test {
 
         //test one
         Room[][] verticalTrue = new Room[][]{
+                {new Room(true), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
+                {new Room(true), new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
+                {new Room(false), new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
+                {new Room(false), new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
+                {new Room(false), new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
+                {new Room(false), new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
                 {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
                 {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
-                {new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)}
+                {new Room(false), new Room(true), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)},
+                {new Room(false), new Room(true), new Room(false), new Room(true), new Room(false), new Room(false), new Room(false), new Room(false), new Room(false)}
         };
 
         if (isOutbreakThree(verticalTrue)) {
@@ -132,20 +132,26 @@ public class Test {
         return false;
     }
 
-    private static void goWalk(Room room, Room previcous, int count) {
+    private static void goWalk(Room room, List<Room> previous, int count) {
+        List<Room> listLastVisited = previous;
         if(room != null && !room.visited) {
             room.visited = true;
             if (room.isInfected) {
-                if(previcous != null){
-                    room.setCountOfRoomsConnectedInfected(previcous.getCountOfRoomsConnectedInfected() + 1);
-                    previcous.setCountOfRoomsConnectedInfected(previcous.getCountOfRoomsConnectedInfected() + 1);
+                if(listLastVisited != null){
+                    room.setCountOfRoomsConnectedInfected(previous.get(0).getCountOfRoomsConnectedInfected() + 1);
+                    for (Room r: listLastVisited) {
+                        r.setCountOfRoomsConnectedInfected(room.getCountOfRoomsConnectedInfected());
+                    }
+                    listLastVisited.add(room);
                 }else {
                     room.setCountOfRoomsConnectedInfected(count + 1);
+                    listLastVisited = new ArrayList<>();
+                    listLastVisited.add(room);
                 }
-                goWalk(room.getUp(),    room, room.getCountOfRoomsConnectedInfected());
-                goWalk(room.getRight(), room, room.getCountOfRoomsConnectedInfected());
-                goWalk(room.getDown(),  room, room.getCountOfRoomsConnectedInfected());
-                goWalk(room.getLeft(),  room, room.getCountOfRoomsConnectedInfected());
+                goWalk(room.getUp(),    listLastVisited, room.getCountOfRoomsConnectedInfected());
+                goWalk(room.getRight(), listLastVisited, room.getCountOfRoomsConnectedInfected());
+                goWalk(room.getDown(),  listLastVisited, room.getCountOfRoomsConnectedInfected());
+                goWalk(room.getLeft(),  listLastVisited, room.getCountOfRoomsConnectedInfected());
             }
         }
     }
